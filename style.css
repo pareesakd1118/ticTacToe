@@ -50,10 +50,12 @@ h1 {
 
 .board-container {
     margin-top: 50px;
+    cursor: 'pointer'; 
 }
 
 td {
     border: 5px solid black;
     height: 100px;
     width: 100px;
+    color: rgb(70, 207, 70);
     }

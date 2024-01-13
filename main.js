@@ -16,14 +16,23 @@
 // Connect the data model to the DOM - ensure that the data model updates based on user interaction
 // Automatically reset the game board to allow for a new game to be played after the previous game is won
 
-//DATA MODELS
-var playerInfo = [];
+//DATA MODELS---------------------------------------------------------------------------------------------------------------
+var playerOneInfo = {
+    wins: 0,
+    spotsOccupied: [],
+    wonCurrentGame: false
+};
+var playerTwoInfo = {
+    wins: 0,
+    spotsOccupied: [],
+    wonCurrentGame: false
+}
 var gameBoardArray = [];
 var play;
 var currentPlayer = "🎃";
 
 
-//QUERY SELECTORS
+//QUERY SELECTORS---------------------------------------------------------------------------------------------------------------
 var gameBoard = document.querySelector('.board-container');
 var turn = document.querySelector('.turn');
 var one = document.querySelector('#one');
@@ -35,19 +44,24 @@ var six = document.querySelector('#six');
 var seven = document.querySelector('#seven');
 var eight = document.querySelector('#eight');
 var nine = document.querySelector('#nine');
+var playerOneWins = document.querySelector('.🎃 wins')
+var playerTwoWins = document.querySelector('.🧟‍♂️ wins')
 
-//EVENT LISTENERS
+//EVENT LISTENERS---------------------------------------------------------------------------------------------------------------
+gameBoard.style.cursor = 'pointer'; 
+
 gameBoard.addEventListener("click", function(event) {
     if (!event.target.closest("td").innerText) {
         createPlay(event);
         pushPlay();
         switchCurrentPlayer();
         renderGameBoard(); 
-    }
+        updatePlayerSpots();
+        detectsWin();
+    } 
 });
 
-
-//FUNCTIONS
+//FUNCTIONS---------------------------------------------------------------------------------------------------------------
 //this function creates an object with info about the play on the game board 
 function createPlay(event) {
     play = {
@@ -58,11 +72,19 @@ function createPlay(event) {
     return play 
 }
 
+
 //this function pushes the play to the data model (gameBoardArray)
 function pushPlay() {
     gameBoardArray.push(play)
 
     return gameBoardArray
+}
+
+//this function switches the current player
+function switchCurrentPlayer() {
+    currentPlayer === "🎃" ? currentPlayer = "🧟‍♂️" : currentPlayer = "🎃"
+    
+    return currentPlayer
 }
 
 //this function renders the gameboard based on the data model (gameBoard)
@@ -72,11 +94,39 @@ function renderGameBoard() {
     }
 
     turn.innerText = `It's ${currentPlayer}'s Turn`
+    // playerOneWins.innerText = `${playerOneInfo.wins} Wins`
+    // playerTwoWins.innerText = `${playerTwoInfo.wins} Wins`
 }
 
-//this function switches the current player
-function switchCurrentPlayer() {
-    currentPlayer === "🎃" ? currentPlayer = "🧟‍♂️" : currentPlayer = "🎃"
-    
-    return currentPlayer
-}
+//this function updates info on which spots each player occupies
+ function updatePlayerSpots() {
+    for (var i = 0; i < gameBoardArray.length; i++) {
+        if (gameBoardArray[i].emoji === "🎃") {
+            playerOneInfo.spotsOccupied.push(gameBoardArray[i].id)
+        } else {
+            playerTwoInfo.spotsOccupied.push(gameBoardArray[i].id)
+        }
+    }
+    console.log("P1: ", playerOneInfo.spotsOccupied)
+    console.log("P2: ", playerTwoInfo.spotsOccupied)
+ }
+
+//this function detects if one of the players has a win 
+ function detectsWin() {
+    var winningCombos = [["one", "two", "three"], ["four", "five", "six"], ["seven", "eight", "nine"], ["one", "four", "seven"], ["two", "five", "eight"], ["three", "six", "nine"], ["one", "five", "nine"], ["three", "five", "seven"]];
+    for (var i = 0; i < winningCombos.length; i++) {
+        if (winningCombos[i].every(element => playerOneInfo.spotsOccupied.includes(element))) {
+            console.log("P1 WINNER")
+            playerOneInfo.wins ++;
+            playerOneInfo.wonCurrentGame = true;
+
+        }
+        if (winningCombos[i].every(element => playerTwoInfo.spotsOccupied.includes(element))) {
+            console.log("P2 WINNER")
+            playerTwoInfo.wins ++;
+            playerTwoInfo.wonCurrentGame = true;
+        }
+    }
+    console.log("wins P1: ", playerOneInfo.wins, playerOneInfo.wonCurrentGame)
+    console.log("wins P2: ", playerTwoInfo.wins, playerTwoInfo.wonCurrentGame)
+ }

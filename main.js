@@ -16,7 +16,7 @@
 // Connect the data model to the DOM - ensure that the data model updates based on user interaction
 // Automatically reset the game board to allow for a new game to be played after the previous game is won
 
-//DATA MODELS---------------------------------------------------------------------------------------------------------------
+//DATA MODELS/GLOBAL VARIABLES---------------------------------------------------------------------------------------------------------------
 var playerOneInfo = {
     wins: 0,
     spotsOccupied: [],
@@ -28,11 +28,10 @@ var playerTwoInfo = {
     spotsOccupied: [],
     wonCurrentGame: false,
     emoji: "🧟‍♂️"
-}
+};
 var gameBoardArray = [];
 var play;
 var currentPlayer = "🎃";
-
 
 //QUERY SELECTORS---------------------------------------------------------------------------------------------------------------
 var gameBoard = document.querySelector('.board-container');
@@ -46,8 +45,8 @@ var six = document.querySelector('#six');
 var seven = document.querySelector('#seven');
 var eight = document.querySelector('#eight');
 var nine = document.querySelector('#nine');
-var playerOneWins = document.querySelector('.🎃 wins')
-var playerTwoWins = document.querySelector('.🧟‍♂️ wins')
+var playerOneWins = document.querySelector('.🎃')
+var playerTwoWins = document.querySelector('.🧟‍♂️')
 
 //EVENT LISTENERS---------------------------------------------------------------------------------------------------------------
 gameBoard.addEventListener("click", function(event) {
@@ -61,6 +60,7 @@ gameBoard.addEventListener("click", function(event) {
         increaseWins();
         announceWinner();
         detectDraw();
+        updateWins();
     } 
 });
 
@@ -72,47 +72,45 @@ function createPlay(event) {
         emoji: currentPlayer
     }
   
-    return play 
-}
+    return play; 
+};
 
 
 //This function pushes the play to the data model (gameBoardArray)
 function pushPlay() {
     gameBoardArray.push(play)
 
-    return gameBoardArray
-}
+    return gameBoardArray;
+};
 
 //This function switches the current player
 function switchCurrentPlayer() {
     currentPlayer === "🎃" ? currentPlayer = "🧟‍♂️" : currentPlayer = "🎃"
     
-    return currentPlayer
-}
+    return currentPlayer;
+};
 
 //This function renders the gameboard based on the data model (gameBoard)
 function renderGameBoard() {
     for (var i = 0; i < gameBoardArray.length; i++) {
-        document.getElementById([gameBoardArray[i].id]).innerText = gameBoardArray[i].emoji
+        document.getElementById([gameBoardArray[i].id]).innerText = gameBoardArray[i].emoji;
     }
 
-    turn.innerText = `It's ${currentPlayer}'s Turn`
-    // playerOneWins.innerText = `${playerOneInfo.wins} Wins`
-    // playerTwoWins.innerText = `${playerTwoInfo.wins} Wins`
-}
+    turn.innerText = `It's ${currentPlayer}'s Turn`;
+};
 
 //This function updates info on which spots each player occupies
  function updatePlayerSpots() {
     for (var i = 0; i < gameBoardArray.length; i++) {
         if (gameBoardArray[i].emoji === "🎃") {
-            playerOneInfo.spotsOccupied.push(gameBoardArray[i].id)
+            playerOneInfo.spotsOccupied.push(gameBoardArray[i].id);
         } else {
-            playerTwoInfo.spotsOccupied.push(gameBoardArray[i].id)
+            playerTwoInfo.spotsOccupied.push(gameBoardArray[i].id);
         }
     }
     console.log("P1: ", playerOneInfo.spotsOccupied)
     console.log("P2: ", playerTwoInfo.spotsOccupied)
- }
+ };
 
 //This function detects if one of the players has a win 
  function detectWin() {
@@ -129,7 +127,7 @@ function renderGameBoard() {
         }
     }
 
- }
+ };
 
  //This function increases the number of wins the player has in the data model in the case of a win 
  function increaseWins() {
@@ -141,7 +139,7 @@ function renderGameBoard() {
     }
     console.log("wins P1: ", playerOneInfo.wins, playerOneInfo.wonCurrentGame)
     console.log("wins P2: ", playerTwoInfo.wins, playerTwoInfo.wonCurrentGame)
- }
+ };
 
  //This function announces the winner 
  function announceWinner() {
@@ -151,11 +149,19 @@ function renderGameBoard() {
     if (playerTwoInfo.wonCurrentGame) {
         turn.innerText = `It seems as though ${playerTwoInfo.emoji} has won...`;
     }
- }
+ };
 
- //this function detects/announces a draw 
+ //This function detects/announces a draw 
  function detectDraw() {
     if (!playerOneInfo.wonCurrentGame && !playerOneInfo.wonCurrentGame && gameBoardArray.length === 9) {
         turn.innerText = "AHA! It seems we have a draw..."
     }
- }
+ };
+
+ //This function updates the players number of wins 
+ function updateWins() {
+    if (playerOneInfo.wonCurrentGame || playerOneInfo.wonCurrentGame) {
+        playerOneWins.innerText = `${playerOneInfo.wins} wins`;
+        playerTwoWins.innerText = `${playerTwoInfo.wins} wins`;
+    }
+ };

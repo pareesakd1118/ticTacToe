@@ -50,8 +50,6 @@ var playerOneWins = document.querySelector('.🎃 wins')
 var playerTwoWins = document.querySelector('.🧟‍♂️ wins')
 
 //EVENT LISTENERS---------------------------------------------------------------------------------------------------------------
-gameBoard.style.cursor = 'pointer'; 
-
 gameBoard.addEventListener("click", function(event) {
     if (!event.target.closest("td").innerText) {
         createPlay(event);
@@ -62,11 +60,12 @@ gameBoard.addEventListener("click", function(event) {
         detectWin();
         increaseWins();
         announceWinner();
+        detectDraw();
     } 
 });
 
 //FUNCTIONS---------------------------------------------------------------------------------------------------------------
-//this function creates an object with info about the play on the game board 
+//This function creates an object with info about the play on the game board 
 function createPlay(event) {
     play = {
         id: event.target.closest("td").id,
@@ -77,21 +76,21 @@ function createPlay(event) {
 }
 
 
-//this function pushes the play to the data model (gameBoardArray)
+//This function pushes the play to the data model (gameBoardArray)
 function pushPlay() {
     gameBoardArray.push(play)
 
     return gameBoardArray
 }
 
-//this function switches the current player
+//This function switches the current player
 function switchCurrentPlayer() {
     currentPlayer === "🎃" ? currentPlayer = "🧟‍♂️" : currentPlayer = "🎃"
     
     return currentPlayer
 }
 
-//this function renders the gameboard based on the data model (gameBoard)
+//This function renders the gameboard based on the data model (gameBoard)
 function renderGameBoard() {
     for (var i = 0; i < gameBoardArray.length; i++) {
         document.getElementById([gameBoardArray[i].id]).innerText = gameBoardArray[i].emoji
@@ -102,7 +101,7 @@ function renderGameBoard() {
     // playerTwoWins.innerText = `${playerTwoInfo.wins} Wins`
 }
 
-//this function updates info on which spots each player occupies
+//This function updates info on which spots each player occupies
  function updatePlayerSpots() {
     for (var i = 0; i < gameBoardArray.length; i++) {
         if (gameBoardArray[i].emoji === "🎃") {
@@ -115,7 +114,7 @@ function renderGameBoard() {
     console.log("P2: ", playerTwoInfo.spotsOccupied)
  }
 
-//this function detects if one of the players has a win 
+//This function detects if one of the players has a win 
  function detectWin() {
     var winningCombos = [["one", "two", "three"], ["four", "five", "six"], ["seven", "eight", "nine"], ["one", "four", "seven"], ["two", "five", "eight"], ["three", "six", "nine"], ["one", "five", "nine"], ["three", "five", "seven"]];
     for (var i = 0; i < winningCombos.length; i++) {
@@ -154,4 +153,9 @@ function renderGameBoard() {
     }
  }
 
- //this function 
+ //this function detects/announces a draw 
+ function detectDraw() {
+    if (!playerOneInfo.wonCurrentGame && !playerOneInfo.wonCurrentGame && gameBoardArray.length === 9) {
+        turn.innerText = "AHA! It seems we have a draw..."
+    }
+ }

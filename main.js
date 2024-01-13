@@ -20,12 +20,14 @@
 var playerOneInfo = {
     wins: 0,
     spotsOccupied: [],
-    wonCurrentGame: false
+    wonCurrentGame: false,
+    emoji: "🎃"
 };
 var playerTwoInfo = {
     wins: 0,
     spotsOccupied: [],
-    wonCurrentGame: false
+    wonCurrentGame: false,
+    emoji: "🧟‍♂️"
 }
 var gameBoardArray = [];
 var play;
@@ -57,7 +59,9 @@ gameBoard.addEventListener("click", function(event) {
         switchCurrentPlayer();
         renderGameBoard(); 
         updatePlayerSpots();
-        detectsWin();
+        detectWin();
+        increaseWins();
+        announceWinner();
     } 
 });
 
@@ -112,21 +116,42 @@ function renderGameBoard() {
  }
 
 //this function detects if one of the players has a win 
- function detectsWin() {
+ function detectWin() {
     var winningCombos = [["one", "two", "three"], ["four", "five", "six"], ["seven", "eight", "nine"], ["one", "four", "seven"], ["two", "five", "eight"], ["three", "six", "nine"], ["one", "five", "nine"], ["three", "five", "seven"]];
     for (var i = 0; i < winningCombos.length; i++) {
         if (winningCombos[i].every(element => playerOneInfo.spotsOccupied.includes(element))) {
             console.log("P1 WINNER")
-            playerOneInfo.wins ++;
             playerOneInfo.wonCurrentGame = true;
 
         }
         if (winningCombos[i].every(element => playerTwoInfo.spotsOccupied.includes(element))) {
             console.log("P2 WINNER")
-            playerTwoInfo.wins ++;
             playerTwoInfo.wonCurrentGame = true;
         }
+    }
+
+ }
+
+ //This function increases the number of wins the player has in the data model in the case of a win 
+ function increaseWins() {
+    if (playerOneInfo.wonCurrentGame) {
+        playerOneInfo.wins ++;
+    }
+    if (playerTwoInfo.wonCurrentGame) {
+        playerTwoInfo.wins ++;
     }
     console.log("wins P1: ", playerOneInfo.wins, playerOneInfo.wonCurrentGame)
     console.log("wins P2: ", playerTwoInfo.wins, playerTwoInfo.wonCurrentGame)
  }
+
+ //This function announces the winner 
+ function announceWinner() {
+    if (playerOneInfo.wonCurrentGame) {
+        turn.innerText = `It seems as though ${playerOneInfo.emoji} has won...`;
+    }
+    if (playerTwoInfo.wonCurrentGame) {
+        turn.innerText = `It seems as though ${playerTwoInfo.emoji} has won...`;
+    }
+ }
+
+ //this function 

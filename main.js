@@ -48,6 +48,8 @@ var nine = document.querySelector('#nine');
 var playerOneWins = document.querySelector('.🎃')
 var playerTwoWins = document.querySelector('.🧟‍♂️')
 
+// gameBoard.style.cursor = pointer;
+
 //EVENT LISTENERS---------------------------------------------------------------------------------------------------------------
 gameBoard.addEventListener("click", function(event) {
     if (!event.target.closest("td").innerText) {
@@ -62,7 +64,9 @@ gameBoard.addEventListener("click", function(event) {
         announceWinner();
         detectDraw();
         updateWins();
-        setTimeout(resetGameboard(), 1000);
+        setTimeout(function() {
+            resetGameboard();
+        }, 7000);
     }
     
 });
@@ -174,18 +178,9 @@ function changeCurrentPLayer() {
 
 
 
- //This function resets the game board after a win or draw 
-//  function resetGameboard() {
-//     if (playerOneInfo.wonCurrentGame || playerOneInfo.wonCurrentGame || gameBoardArray.length === 9) {
-//         for (var i = 0; i < gameBoardArray.length; i++) {
-//             document.getElementById([gameBoardArray[i].id]).innerText = "";
-//         }    
-//     }
-
-//     turn.innerText = `It's ${currentPlayer}'s Turn`;
-//  }
 
 
+//This function resets the gameboard in case of a win or draw
  function resetGameboard() {
     if (playerOneInfo.wonCurrentGame || playerTwoInfo.wonCurrentGame || gameBoardArray.length === 9) {
         for (var i = 0; i < gameBoardArray.length; i++) {
@@ -198,7 +193,6 @@ function changeCurrentPLayer() {
         playerTwoInfo.spotsOccupied = [];
         changeCurrentPLayer();
 
-    // renderGameBoard();
 
     }
     console.log("WE MADE IT HERE")

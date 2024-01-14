@@ -54,14 +54,17 @@ gameBoard.addEventListener("click", function(event) {
         createPlay(event);
         pushPlay();
         switchCurrentPlayer();
-        renderGameBoard(); 
+        renderGameBoard();
+        changeCurrentPLayer(); 
         updatePlayerSpots();
         detectWin();
         increaseWins();
         announceWinner();
         detectDraw();
         updateWins();
-    } 
+        setTimeout(resetGameboard(), 1000);
+    }
+    
 });
 
 //FUNCTIONS---------------------------------------------------------------------------------------------------------------
@@ -83,7 +86,7 @@ function pushPlay() {
     return gameBoardArray;
 };
 
-//This function switches the current player
+//This function switches the current player in the data model
 function switchCurrentPlayer() {
     currentPlayer === "🎃" ? currentPlayer = "🧟‍♂️" : currentPlayer = "🎃"
     
@@ -95,7 +98,10 @@ function renderGameBoard() {
     for (var i = 0; i < gameBoardArray.length; i++) {
         document.getElementById([gameBoardArray[i].id]).innerText = gameBoardArray[i].emoji;
     }
+};
 
+//This function announces the current player on the DOM 
+function changeCurrentPLayer() {
     turn.innerText = `It's ${currentPlayer}'s Turn`;
 };
 
@@ -160,8 +166,42 @@ function renderGameBoard() {
 
  //This function updates the players number of wins 
  function updateWins() {
-    if (playerOneInfo.wonCurrentGame || playerOneInfo.wonCurrentGame) {
+    if (playerOneInfo.wonCurrentGame || playerTwoInfo.wonCurrentGame) {
         playerOneWins.innerText = `${playerOneInfo.wins} wins`;
         playerTwoWins.innerText = `${playerTwoInfo.wins} wins`;
     }
  };
+
+
+
+ //This function resets the game board after a win or draw 
+//  function resetGameboard() {
+//     if (playerOneInfo.wonCurrentGame || playerOneInfo.wonCurrentGame || gameBoardArray.length === 9) {
+//         for (var i = 0; i < gameBoardArray.length; i++) {
+//             document.getElementById([gameBoardArray[i].id]).innerText = "";
+//         }    
+//     }
+
+//     turn.innerText = `It's ${currentPlayer}'s Turn`;
+//  }
+
+
+ function resetGameboard() {
+    if (playerOneInfo.wonCurrentGame || playerTwoInfo.wonCurrentGame || gameBoardArray.length === 9) {
+        for (var i = 0; i < gameBoardArray.length; i++) {
+            document.getElementById([gameBoardArray[i].id]).innerText = "";
+        }
+        gameBoardArray = [];
+        playerOneInfo.wonCurrentGame = false;
+        playerTwoInfo.wonCurrentGame = false;
+        playerOneInfo.spotsOccupied = [];
+        playerTwoInfo.spotsOccupied = [];
+        changeCurrentPLayer();
+
+    // renderGameBoard();
+
+    }
+    console.log("WE MADE IT HERE")
+    console.log("player1 info: ", playerOneInfo)
+    console.log("player2 info: ", playerTwoInfo)
+ }

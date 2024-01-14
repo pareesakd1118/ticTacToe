@@ -1,21 +1,3 @@
-// Your game logic methods must include, but are not limited to:
-// A function that creates the objects that store each players’ informations - properties should include: id (ex: 'one'), token (ex: '⭐️'), wins (ex: 0)
-// A function called increaseWins - increases the count of a player’s wins (should work for either player)
-// A function that keeps track of the data for the game board
-// A function that keeps track of which player’s turn it currently is
-// A function that checks the game board data for win conditions
-// A function that detects when a game is a draw (no one has won)
-// A function that resets the game board’s data to begin a new game
-
-
-// Create the functions that describe/update the players and their data
-// Create the functions that describe/update the game board and gameplay
-// Reflect: without thinking about the DOM, could you call all the necessary functions that a game would need in order to function? Would your data update properly? Would your game be able to know when someone has won? etc
-// Create central game board on the DOM and connect it to the game’s data
-// Display each player’s data in the sidebars
-// Connect the data model to the DOM - ensure that the data model updates based on user interaction
-// Automatically reset the game board to allow for a new game to be played after the previous game is won
-
 //DATA MODELS/GLOBAL VARIABLES---------------------------------------------------------------------------------------------------------------
 var playerOneInfo = {
     wins: 0,
@@ -82,7 +64,6 @@ function createPlay(event) {
     return play; 
 };
 
-
 //This function pushes the play to the data model (gameBoardArray)
 function pushPlay() {
     gameBoardArray.push(play)
@@ -118,8 +99,6 @@ function changeCurrentPLayer() {
             playerTwoInfo.spotsOccupied.push(gameBoardArray[i].id);
         }
     }
-    console.log("P1: ", playerOneInfo.spotsOccupied)
-    console.log("P2: ", playerTwoInfo.spotsOccupied)
  };
 
 //This function detects if one of the players has a win 
@@ -127,12 +106,10 @@ function changeCurrentPLayer() {
     var winningCombos = [["one", "two", "three"], ["four", "five", "six"], ["seven", "eight", "nine"], ["one", "four", "seven"], ["two", "five", "eight"], ["three", "six", "nine"], ["one", "five", "nine"], ["three", "five", "seven"]];
     for (var i = 0; i < winningCombos.length; i++) {
         if (winningCombos[i].every(element => playerOneInfo.spotsOccupied.includes(element))) {
-            console.log("P1 WINNER")
             playerOneInfo.wonCurrentGame = true;
 
         }
         if (winningCombos[i].every(element => playerTwoInfo.spotsOccupied.includes(element))) {
-            console.log("P2 WINNER")
             playerTwoInfo.wonCurrentGame = true;
         }
     }
@@ -147,8 +124,6 @@ function changeCurrentPLayer() {
     if (playerTwoInfo.wonCurrentGame) {
         playerTwoInfo.wins ++;
     }
-    console.log("wins P1: ", playerOneInfo.wins, playerOneInfo.wonCurrentGame)
-    console.log("wins P2: ", playerTwoInfo.wins, playerTwoInfo.wonCurrentGame)
  };
 
  //This function announces the winner 
@@ -176,10 +151,6 @@ function changeCurrentPLayer() {
     }
  };
 
-
-
-
-
 //This function resets the gameboard in case of a win or draw
  function resetGameboard() {
     if (playerOneInfo.wonCurrentGame || playerTwoInfo.wonCurrentGame || gameBoardArray.length === 9) {
@@ -192,10 +163,5 @@ function changeCurrentPLayer() {
         playerOneInfo.spotsOccupied = [];
         playerTwoInfo.spotsOccupied = [];
         changeCurrentPLayer();
-
-
     }
-    console.log("WE MADE IT HERE")
-    console.log("player1 info: ", playerOneInfo)
-    console.log("player2 info: ", playerTwoInfo)
  }

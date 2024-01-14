@@ -30,7 +30,7 @@ var nine = document.querySelector('#nine');
 var playerOneWins = document.querySelector('.🎃')
 var playerTwoWins = document.querySelector('.🧟‍♂️')
 
-// gameBoard.style.cursor = pointer;
+gameBoard.style.cursor = 'pointer'; 
 
 //EVENT LISTENERS---------------------------------------------------------------------------------------------------------------
 gameBoard.addEventListener("click", function(event) {

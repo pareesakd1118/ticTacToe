@@ -34,7 +34,7 @@ gameBoard.style.cursor = 'pointer';
 
 //EVENT LISTENERS---------------------------------------------------------------------------------------------------------------
 gameBoard.addEventListener("click", function(event) {
-    if (!event.target.closest("td").innerText) {
+    if (!event.target.closest("td").innerText && !playerOneInfo.wonCurrentGame && !playerTwoInfo.wonCurrentGame) {
         createPlay(event);
         pushPlay();
         switchCurrentPlayer();
@@ -49,8 +49,7 @@ gameBoard.addEventListener("click", function(event) {
         setTimeout(function() {
             resetGameboard();
         }, 7000);
-    }
-    
+    }   
 });
 
 //FUNCTIONS---------------------------------------------------------------------------------------------------------------
@@ -113,7 +112,6 @@ function changeCurrentPLayer() {
             playerTwoInfo.wonCurrentGame = true;
         }
     }
-
  };
 
  //This function increases the number of wins the player has in the data model in the case of a win 
@@ -151,6 +149,7 @@ function changeCurrentPLayer() {
     }
  };
 
+
 //This function resets the gameboard in case of a win or draw
  function resetGameboard() {
     if (playerOneInfo.wonCurrentGame || playerTwoInfo.wonCurrentGame || gameBoardArray.length === 9) {
@@ -165,3 +164,4 @@ function changeCurrentPLayer() {
         changeCurrentPLayer();
     }
  };
+

@@ -25,7 +25,7 @@ I designed a web application in which two users with preset characters can play 
 I have been learning javascript for about 5 weeks, and HTML/CSS for about 4 weeks. I spent about 2-3 hours creating the HTML/styling of this web application, and another 5 hours a day for 3 days on the functionality (javascript) of the application, for a total of just under 20 hours of worktime. 
 
 ### Contributors:
-[Pareesa Kamgar-Dayhoff's GitHub] (https://github.com/pareesakd1118)
+[Pareesa Kamgar-Dayhoff's GitHub](https://github.com/pareesakd1118)
 
 ### Learning Goals:
 The designated learning goals are as follows:

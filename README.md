@@ -1,6 +1,6 @@
 # Tic Tac Toe
 ### Abstract:
-I designed a web application in which two users with preset characters can play a game of tic-tac-toe. In this case, tic-tac-boo (the application is Halloween themed). Features of the web application include:
+I designed a web application (deployed website linked [here](https://pareesakd1118.github.io/ticTacToe/))in which two users with preset characters can play a game of tic-tac-toe. In this case, tic-tac-boo (the application is Halloween themed). Features of the web application include:
 - Keeping track of whose turn it is (jack-o-lantern or zombie) above the gameboard
 - Placing the designated current players' emoji in a square on the gameboard by clicking the desired block
 - The application does not allow a player to place their emoji in a spot which is already occupied, and it remains their turn if they attempt to do so
